@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="club.hl.mapper.bookMapperCustom">
+	<!-- 定义商品查询的sql片段 -->
+	<sql id="query_book_where">
+		<!-- 使用动态sql，通过if判断 -->
+		<if test="bCustom!=null">
+			<if test="bCustom.comefrom!=null and bCustom.comefrom!=''">
+				book.comefrom like '%${bCustom.comefrom}%'
+			</if>
+		</if>
+	</sql>
+
+	<!-- 书的列表查询 -->
+	<select id="findBooksList"
+		parameterType="club.hl.pojo.bookQueryVo"
+		resultType="club.hl.pojo.bookCustom">
+		select *from book
+		<where>
+			<include refid="query_book_where"></include>
+		</where>
+	</select>
+</mapper>
